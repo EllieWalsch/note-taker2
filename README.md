@@ -10,7 +10,7 @@ If you'd like to install this project, simply download the repo and run 'npm i' 
 
 ## Usage
 
-[Click here for a link to the application!](link goes here)
+[Click here for a link to the application!](https://mighty-wildwood-25165.herokuapp.com/)
 
 Enter a title and body for your note, then click the save icon on the top right to save your note. Saved notes will appear on the left column. To view a note, simply click on the title in the left column. To delete a note, click the red trash icon. To add a new note, click the plus icon on the top right. 
 
