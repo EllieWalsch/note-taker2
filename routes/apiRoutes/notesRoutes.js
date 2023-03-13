@@ -1,10 +1,22 @@
 const notes = require('express').Router();
-const { readFromFile, readAndAppend } = require('../../helpers/fsUtils.js');
+const { readFromFile, readAndAppend, writeToFile } = require('../../helpers/fsUtils.js');
 const { v4: uuidv4 } = require('uuid');
 
 notes.get('/', (req, res) =>
   readFromFile('C:/Users/ellie/code/note-taker2/db/db.json').then((data) => res.json(JSON.parse(data)))
 );
+
+notes.get('/:id', (req, res) => {
+    const noteId = req.params.id;
+    readFromFile('C:/Users/ellie/code/note-taker2/db/db.json')
+      .then((data) => JSON.parse(data))
+      .then((json) => {
+        const result = json.filter((note) => note.id === noteId);
+        return result.length > 0
+          ? res.json(result)
+          : res.json('No note with that ID');
+      });
+});
 
 notes.post('/', (req, res) => {
     // Destructuring assignment for the items in req.body
@@ -16,7 +28,7 @@ notes.post('/', (req, res) => {
       const newNote = {
         title,
         text,
-        note_id: uuidv4(),
+        id: uuidv4(),
       };
   
       readAndAppend(newNote, 'C:/Users/ellie/code/note-taker2/db/db.json');
@@ -30,6 +42,6 @@ notes.post('/', (req, res) => {
     } else {
       res.json('Error in adding note');
     }
-  });
+});
 
 module.exports = notes;

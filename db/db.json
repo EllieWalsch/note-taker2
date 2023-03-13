@@ -1,19 +1,7 @@
 [
     {
-        "title": "Test Title",
-        "text": "Test text"
-    },
-    {
-        "title": "Another note",
-        "text": "Test text"
-    },
-    {
-        "title": "Hello",
-        "text": "test body"
-    },
-    {
-        "title": "Testing Id",
-        "text": "test body",
-        "note_id": "7f5352c9-cd4f-458d-8d91-586ae9efa796"
+        "title": "Another id test",
+        "text": "body",
+        "id": "70786beb-c6ce-4a0c-9815-fb35d979d695"
     }
 ]
