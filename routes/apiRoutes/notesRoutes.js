@@ -18,6 +18,19 @@ notes.get('/:id', (req, res) => {
       });
 });
 
+notes.delete('/:id', (req, res) => {
+    const noteId = req.params.id;
+    readFromFile('C:/Users/ellie/code/note-taker2/db/db.json')
+      .then((data) => JSON.parse(data))
+      .then((json) => {
+        const result = json.filter((note) => note.id !== noteId);
+  
+        writeToFile('C:/Users/ellie/code/note-taker2/db/db.json', result);
+  
+        res.json(`Item ${noteId} has been deleted`);
+      });
+});
+
 notes.post('/', (req, res) => {
     // Destructuring assignment for the items in req.body
     const { title, text } = req.body;
