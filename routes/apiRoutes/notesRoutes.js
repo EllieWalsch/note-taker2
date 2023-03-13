@@ -1,6 +1,7 @@
 const notes = require('express').Router();
 const { readFromFile, readAndAppend, writeToFile } = require('../../helpers/fsUtils.js');
 const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 
 notes.get('/', (req, res) =>
   readFromFile('../public/db/db.json').then((data) => res.json(JSON.parse(data)))
@@ -8,7 +9,7 @@ notes.get('/', (req, res) =>
 
 notes.get('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile('../public/db/db.json')
+    readFromFile(path.join(__dirname, '../public/db/db.json'))
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id === noteId);
@@ -20,12 +21,12 @@ notes.get('/:id', (req, res) => {
 
 notes.delete('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile('../public/db/db.json')
+    readFromFile(path.join(__dirname, '../public/db/db.json'))
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id !== noteId);
   
-        writeToFile('../public/db/db.json', result);
+        writeToFile((path.join(__dirname, '../public/db/db.json')), result);
   
         res.json(`Item ${noteId} has been deleted`);
       });
@@ -44,7 +45,7 @@ notes.post('/', (req, res) => {
         id: uuidv4(),
       };
   
-      readAndAppend(newNote, '../public/db/db.json');
+      readAndAppend(newNote, (path.join(__dirname, '../public/db/db.json')));
   
       const response = {
         status: 'success',
