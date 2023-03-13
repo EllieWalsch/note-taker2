@@ -3,12 +3,12 @@ const { readFromFile, readAndAppend, writeToFile } = require('../../helpers/fsUt
 const { v4: uuidv4 } = require('uuid');
 
 notes.get('/', (req, res) =>
-  readFromFile('C:/Users/ellie/code/note-taker2/db/db.json').then((data) => res.json(JSON.parse(data)))
+  readFromFile('../public/db/db.json').then((data) => res.json(JSON.parse(data)))
 );
 
 notes.get('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile('C:/Users/ellie/code/note-taker2/db/db.json')
+    readFromFile('../public/db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id === noteId);
@@ -20,12 +20,12 @@ notes.get('/:id', (req, res) => {
 
 notes.delete('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile('C:/Users/ellie/code/note-taker2/db/db.json')
+    readFromFile('../public/db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id !== noteId);
   
-        writeToFile('C:/Users/ellie/code/note-taker2/db/db.json', result);
+        writeToFile('../public/db/db.json', result);
   
         res.json(`Item ${noteId} has been deleted`);
       });
@@ -44,7 +44,7 @@ notes.post('/', (req, res) => {
         id: uuidv4(),
       };
   
-      readAndAppend(newNote, 'C:/Users/ellie/code/note-taker2/db/db.json');
+      readAndAppend(newNote, '../public/db/db.json');
   
       const response = {
         status: 'success',
