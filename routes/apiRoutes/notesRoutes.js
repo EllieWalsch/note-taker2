@@ -6,12 +6,12 @@ const path = require('path');
 // '/app/public/db/db.json'
 
 notes.get('/', (req, res) =>
-  readFromFile(path.join(__dirname, '../public/db/db.json')).then((data) => res.json(JSON.parse(data)))
+  readFromFile('./public/db/db.json').then((data) => res.json(JSON.parse(data)))
 );
 
 notes.get('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile(path.join(__dirname, '../public/db/db.json'))
+    readFromFile('./public/db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id === noteId);
@@ -23,12 +23,12 @@ notes.get('/:id', (req, res) => {
 
 notes.delete('/:id', (req, res) => {
     const noteId = req.params.id;
-    readFromFile(path.join(__dirname, '../public/db/db.json'))
+    readFromFile('./public/db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
         const result = json.filter((note) => note.id !== noteId);
   
-        writeToFile((path.join(__dirname, '../public/db/db.json')), result);
+        writeToFile('./public/db/db.json', result);
   
         res.json(`Item ${noteId} has been deleted`);
       });
@@ -47,7 +47,7 @@ notes.post('/', (req, res) => {
         id: uuidv4(),
       };
   
-      readAndAppend(newNote, (path.join(__dirname, '../public/db/db.json')));
+      readAndAppend(newNote, './public/db/db.json');
   
       const response = {
         status: 'success',
